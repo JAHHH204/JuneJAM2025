@@ -92,22 +92,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""74f9afe7-3836-430e-9509-b7cfbbd10def"",
             ""actions"": [
                 {
-                    ""name"": ""MoveRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""fcf5cc7f-96d9-4b3e-adf6-d3fd98df66c1"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveLeft"",
-                    ""type"": ""Button"",
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
                     ""id"": ""d0cf5cd2-77c5-44e8-8677-341cedeecf34"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
@@ -139,13 +130,68 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""306b7a11-80be-4d68-a2d7-74979a311f63"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""70bb38cf-7432-41ad-b8a8-c62f55da458d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ceb2105b-7c32-4f13-8396-7ee6ebcbe3ad"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""10ac2c5d-0104-4493-86d3-b70559ae3ddb"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b788b2a6-bc30-4435-baa0-1ad840889af3"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";ControlScheme"",
-                    ""action"": ""MoveLeft"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""20912416-5f62-4018-95e7-87ae959a016c"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";ControlScheme"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd92fdc6-e98d-4d3a-a2ac-678af2ae324d"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";ControlScheme"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -181,17 +227,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Destroy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f17bbc5f-a87b-47a4-b3d6-9b72989ee11b"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";ControlScheme"",
-                    ""action"": ""MoveRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -206,8 +241,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 }");
         // Inputs
         m_Inputs = asset.FindActionMap("Inputs", throwIfNotFound: true);
-        m_Inputs_MoveRight = m_Inputs.FindAction("MoveRight", throwIfNotFound: true);
-        m_Inputs_MoveLeft = m_Inputs.FindAction("MoveLeft", throwIfNotFound: true);
+        m_Inputs_Move = m_Inputs.FindAction("Move", throwIfNotFound: true);
         m_Inputs_Jump = m_Inputs.FindAction("Jump", throwIfNotFound: true);
         m_Inputs_Build = m_Inputs.FindAction("Build", throwIfNotFound: true);
         m_Inputs_Destroy = m_Inputs.FindAction("Destroy", throwIfNotFound: true);
@@ -291,8 +325,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Inputs
     private readonly InputActionMap m_Inputs;
     private List<IInputsActions> m_InputsActionsCallbackInterfaces = new List<IInputsActions>();
-    private readonly InputAction m_Inputs_MoveRight;
-    private readonly InputAction m_Inputs_MoveLeft;
+    private readonly InputAction m_Inputs_Move;
     private readonly InputAction m_Inputs_Jump;
     private readonly InputAction m_Inputs_Build;
     private readonly InputAction m_Inputs_Destroy;
@@ -308,13 +341,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Inputs/MoveRight".
+        /// Provides access to the underlying input action "Inputs/Move".
         /// </summary>
-        public InputAction @MoveRight => m_Wrapper.m_Inputs_MoveRight;
-        /// <summary>
-        /// Provides access to the underlying input action "Inputs/MoveLeft".
-        /// </summary>
-        public InputAction @MoveLeft => m_Wrapper.m_Inputs_MoveLeft;
+        public InputAction @Move => m_Wrapper.m_Inputs_Move;
         /// <summary>
         /// Provides access to the underlying input action "Inputs/Jump".
         /// </summary>
@@ -353,12 +382,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_InputsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_InputsActionsCallbackInterfaces.Add(instance);
-            @MoveRight.started += instance.OnMoveRight;
-            @MoveRight.performed += instance.OnMoveRight;
-            @MoveRight.canceled += instance.OnMoveRight;
-            @MoveLeft.started += instance.OnMoveLeft;
-            @MoveLeft.performed += instance.OnMoveLeft;
-            @MoveLeft.canceled += instance.OnMoveLeft;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -379,12 +405,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="InputsActions" />
         private void UnregisterCallbacks(IInputsActions instance)
         {
-            @MoveRight.started -= instance.OnMoveRight;
-            @MoveRight.performed -= instance.OnMoveRight;
-            @MoveRight.canceled -= instance.OnMoveRight;
-            @MoveLeft.started -= instance.OnMoveLeft;
-            @MoveLeft.performed -= instance.OnMoveLeft;
-            @MoveLeft.canceled -= instance.OnMoveLeft;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -448,19 +471,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IInputsActions
     {
         /// <summary>
-        /// Method invoked when associated input action "MoveRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveRight(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "MoveLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveLeft(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
