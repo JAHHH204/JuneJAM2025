@@ -23,7 +23,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("TutorialLevel");
         Debug.Log("Starting the game");
     }
 
