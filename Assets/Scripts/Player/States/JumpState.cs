@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class JumpState : PlayerInterface
 {
-    private float jumpForce = 5f;
+    private float jumpForce = 15f;
     private float gravity = -9.81f;
     private float verticalVelocity = 0f;
 
@@ -17,7 +17,7 @@ public class JumpState : PlayerInterface
         Vector3 move = new Vector3(player.moveInput.x,0,player.moveInput.y);
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 velocity = move * 5f;
+        Vector3 velocity = move * 10f;
         velocity.y=verticalVelocity;
 
         player.MoveCharacter(velocity);

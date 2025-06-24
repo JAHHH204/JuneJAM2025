@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -35,7 +36,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         currentState?.UpdateState(this);
         isJumping = false;
     }
@@ -54,16 +54,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void MoveCharacter(Vector3 direction)
+    public void MoveCharacter(Vector3 moveDirection)
     {
-        gravity.y += Physics.gravity.y * Time.deltaTime;
-        direction += gravity;
-        characterController.Move(direction * Time.deltaTime);
+        //Debug.Log("Calling MoveCharacter. Direction: " + moveDirection);
 
-        if (characterController.isGrounded)
-        {
-            gravity.y = 0; // reset fall when grounded
-        }
+        if (characterController.isGrounded && gravity.y < 0)
+            gravity.y = -2f;
+
+        gravity.y += Physics.gravity.y * Time.deltaTime;
+        Vector3 fullMove = (moveDirection + gravity) * Time.deltaTime;
+
+        //Debug.Log("Final move vector: " + fullMove);
+        characterController.Move(fullMove);
     }
 
 
