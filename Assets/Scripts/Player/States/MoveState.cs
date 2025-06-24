@@ -10,8 +10,8 @@ public class MoveState : PlayerInterface
     public void UpdateState(PlayerController player)
     {
         Vector3 move = new Vector3(player.moveInput.x, 0, player.moveInput.y).normalized;
-        player.MoveCharacter(move * 5f);
-        Debug.Log("MoveInput: " + player.moveInput);
+        player.MoveCharacter(move * 10f);
+        //Debug.Log("MoveInput: " + player.moveInput);
 
         if (player.moveInput == Vector2.zero)
         {
