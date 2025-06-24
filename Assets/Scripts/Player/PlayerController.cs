@@ -7,22 +7,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInterface currentState;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerControls playerInput;
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] public CharacterController characterController;
 
     [SerializeField] public Vector2 moveInput {  get; private set; }
     [SerializeField] public bool isJumping { get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    private Vector3 gravity = Vector3.zero;
     private void Awake()
     {
         playerInput = new PlayerControls();
-        characterController = new CharacterController();
         playerAnimator = GetComponent<Animator>();
-
+        characterController = GetComponent<CharacterController>();
         playerInput.Inputs.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerInput.Inputs.Move.canceled += ctx => moveInput = Vector2.zero;
 
-        playerInput.Inputs.Jump.performed += ctx => isJumping=false;
+        playerInput.Inputs.Jump.performed += ctx => isJumping=true;
     }
 
     private void OnEnable() => playerInput.Enable();
@@ -36,7 +35,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         currentState?.UpdateState(this);
+        isJumping = false;
     }
 
     public void StateTransition(PlayerInterface newState)
@@ -50,6 +51,18 @@ public class PlayerController : MonoBehaviour
     {
         if (playerAnimator != null) {
             playerAnimator.Play(animName);
+        }
+    }
+
+    public void MoveCharacter(Vector3 direction)
+    {
+        gravity.y += Physics.gravity.y * Time.deltaTime;
+        direction += gravity;
+        characterController.Move(direction * Time.deltaTime);
+
+        if (characterController.isGrounded)
+        {
+            gravity.y = 0; // reset fall when grounded
         }
     }
 
