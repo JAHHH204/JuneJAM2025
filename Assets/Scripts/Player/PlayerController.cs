@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -8,9 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInterface currentState;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerControls playerInput;
-    [SerializeField] public CharacterController characterController;
-    [SerializeField] public GameObject buildingObject;
+     public CharacterController characterController;
+     public GameObject buildingObject;
     [SerializeField] private LayerMask destroyLayer;
+    [SerializeField] private PauseMenu pauseMenu;
     public LayerMask DestroyLayer => destroyLayer;
     [Header ("Camera")]
     [SerializeField] private Camera mainCamera;
@@ -18,24 +20,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 cameraOffset = new Vector3(0f, 5f, -10f);
     [SerializeField] private float cameraSmoothSpeed = 5f;
     [Header("Checks")]
-    [SerializeField] public Vector2 moveInput {  get; private set; }
-    [SerializeField] public bool isJumping { get; set; }
+     public Vector2 moveInput {  get; private set; }
+     public bool isJumping { get; set; }
 
-    [SerializeField] public bool isCreating { get; set; }
+    public bool isCreating { get; set; }
 
-    [SerializeField] public bool isGrabbing { get; set; }
+     public bool isGrabbing { get; set; }
 
-    [SerializeField] public bool isDestroying { get; set; }
+     public bool isDestroying { get; set; }
 
     [Header("Extra")]
     private Vector3 gravity = Vector3.zero;
-    [SerializeField] public int maxObjects;
+     public int maxObjects;
+    public GameObject lastSpawnedPlatform;
     private void Awake()
     {
         maxObjects = 0;
         playerInput = new PlayerControls();
         playerAnimator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        pauseMenu = GetComponent<PauseMenu>();
         playerInput.Inputs.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerInput.Inputs.Move.canceled += ctx => moveInput = Vector2.zero;
 
@@ -44,6 +48,8 @@ public class PlayerController : MonoBehaviour
         playerInput.Inputs.Build.performed += ctx => isCreating=true;
         playerInput.Inputs.Destroy.performed += ctx => isDestroying = true;
         playerInput.Inputs.Grab.performed += ctx => isGrabbing = true;
+
+        playerInput.Inputs.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
     }
 
     private void OnEnable() => playerInput.Enable();
@@ -68,6 +74,8 @@ public class PlayerController : MonoBehaviour
         isCreating = false;
         isDestroying = false;
         ApplyGravity();
+
+
 
     }
     private void LateUpdate()
@@ -102,7 +110,7 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            float rotationSpeed = 720f; // degrees per second
+            float rotationSpeed = 1080f; // degrees per second
             transform.rotation = Quaternion.RotateTowards(transform.rotation,targetRotation,rotationSpeed * Time.deltaTime);
         }
     }
@@ -124,7 +132,7 @@ public class PlayerController : MonoBehaviour
         Vector3 smoothedPosition = Vector3.Lerp(cameraTransform.position, desiredPosition, cameraSmoothSpeed * Time.deltaTime);
 
         cameraTransform.position = smoothedPosition;
-        cameraTransform.LookAt(transform); // Camera looks at the player
+        cameraTransform.LookAt(transform); 
     }
 
 }

@@ -76,6 +76,13 @@ MonoBehaviour:
   playerAnimator: {fileID: 4776573120369084218}
   characterController: {fileID: 5802227203739814746}
   buildingObject: {fileID: 7516089050690014294, guid: 06271736c3be6c042824423ba26591e3, type: 3}
+  destroyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  mainCamera: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  cameraOffset: {x: 0, y: 5, z: -10}
+  cameraSmoothSpeed: 5
   maxObjects: 0
 --- !u!95 &4776573120369084218
 Animator:
