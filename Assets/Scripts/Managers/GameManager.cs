@@ -23,6 +23,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (AudioListener.volume != volume)
+        {
+            UpdateVolume();
+        }
+    }
+    public void UpdateVolume()
+    {
+        // Assuming you have an AudioSource component to control volume
+        AudioListener.volume = volume; // Set the global audio volume
+        Debug.Log("Volume updated to: " + volume);
     }
 }
