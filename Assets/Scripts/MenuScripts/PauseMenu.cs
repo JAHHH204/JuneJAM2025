@@ -12,16 +12,16 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        
+        pauseMenuCanvas.enabled = false;
+        settingsCanvas.enabled = false;
+        settingsCanvas.GetComponentInChildren<UnityEngine.UI.Slider>().value = GameManager.instance.volume;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePauseMenu();
-        }
+        
     }
     public void TogglePauseMenu()
     {
