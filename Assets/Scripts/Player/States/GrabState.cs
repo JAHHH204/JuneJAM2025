@@ -18,7 +18,7 @@ public class GrabState : PlayerInterface
         {
             grabPoint = new GameObject("GrabPoint").transform;
             grabPoint.SetParent(player.transform);
-            grabPoint.localPosition = new Vector3(0, 1.5f, 1.5f); // Adjust as needed
+            grabPoint.localPosition = new Vector3(0, 1.5f, 3f); // Adjust as needed
         }
 
         RaycastHit hit;
@@ -87,5 +87,6 @@ public class GrabState : PlayerInterface
         grabbedObject = null;
         grabbedRb = null;
         isHolding = false;
+        GameObject.Destroy(grabPoint);
     }
 }
