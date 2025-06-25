@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 734433444594855817}
+  - component: {fileID: -5998116655913665890}
   - component: {fileID: 4392618767470508746}
   - component: {fileID: 8620853559701817273}
   - component: {fileID: 3994493128179395355}
@@ -34,6 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5998116655913665890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7516089050690014294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6f7eb79e911f84ba4bc63f2397b561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Platform: {fileID: 7516089050690014294}
+  destroyTimer: 10
+  playerController: {fileID: 6383263160400799858, guid: aca99705e288e91449f3b1a0d274dccd, type: 3}
 --- !u!33 &4392618767470508746
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97,7 +113,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
