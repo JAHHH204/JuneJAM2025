@@ -18,6 +18,21 @@ public class IdleState: PlayerInterface
         {
             player.StateTransition(new JumpState());
         }
+
+        if (player.isCreating)
+        {
+            player.StateTransition(new BuilderState());
+        }
+
+        if (player.isDestroying)
+        {
+            player.StateTransition(new DestroyState());
+        }
+
+        if (player.isGrabbing)
+        {
+            player.StateTransition(new GrabState());
+        }
     }
 
     public void ExitState(PlayerController player)

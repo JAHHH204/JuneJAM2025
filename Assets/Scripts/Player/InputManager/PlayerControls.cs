@@ -126,6 +126,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Grab"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad6c4cb5-e068-41f3-9b31-c2396e1fad71"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -209,7 +218,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1cc58cd6-eca4-4aae-8afb-2b445523e7b3"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";ControlScheme"",
@@ -220,11 +229,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b0c85f43-b38c-4070-a662-556a73005101"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";ControlScheme"",
                     ""action"": ""Destroy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c283e465-d776-48f4-9dea-50425d24706e"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";ControlScheme"",
+                    ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -245,6 +265,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Inputs_Jump = m_Inputs.FindAction("Jump", throwIfNotFound: true);
         m_Inputs_Build = m_Inputs.FindAction("Build", throwIfNotFound: true);
         m_Inputs_Destroy = m_Inputs.FindAction("Destroy", throwIfNotFound: true);
+        m_Inputs_Grab = m_Inputs.FindAction("Grab", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -329,6 +350,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Inputs_Jump;
     private readonly InputAction m_Inputs_Build;
     private readonly InputAction m_Inputs_Destroy;
+    private readonly InputAction m_Inputs_Grab;
     /// <summary>
     /// Provides access to input actions defined in input action map "Inputs".
     /// </summary>
@@ -356,6 +378,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Inputs/Destroy".
         /// </summary>
         public InputAction @Destroy => m_Wrapper.m_Inputs_Destroy;
+        /// <summary>
+        /// Provides access to the underlying input action "Inputs/Grab".
+        /// </summary>
+        public InputAction @Grab => m_Wrapper.m_Inputs_Grab;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -394,6 +420,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Destroy.started += instance.OnDestroy;
             @Destroy.performed += instance.OnDestroy;
             @Destroy.canceled += instance.OnDestroy;
+            @Grab.started += instance.OnGrab;
+            @Grab.performed += instance.OnGrab;
+            @Grab.canceled += instance.OnGrab;
         }
 
         /// <summary>
@@ -417,6 +446,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Destroy.started -= instance.OnDestroy;
             @Destroy.performed -= instance.OnDestroy;
             @Destroy.canceled -= instance.OnDestroy;
+            @Grab.started -= instance.OnGrab;
+            @Grab.performed -= instance.OnGrab;
+            @Grab.canceled -= instance.OnGrab;
         }
 
         /// <summary>
@@ -498,5 +530,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDestroy(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Grab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrab(InputAction.CallbackContext context);
     }
 }
