@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0312bb844b4a076468ee066d767c13c3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - fogMask: {fileID: 8400000, guid: dc8658111c432c443af4225acfea085d, type: 2}
+  - player: {instanceID: 0}
+  - cam: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
