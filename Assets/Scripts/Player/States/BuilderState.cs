@@ -4,7 +4,10 @@ using UnityEngine.InputSystem;
 public class BuilderState : PlayerInterface
 {
 
-
+    private float jumpForce = 12f;
+    private float gravity = -9.81f;
+    private float verticalVelocity = 0f;
+    float airControlMult = 0.4f;
     public void EnterState(PlayerController player)
     {
         player.SetAnims("Create");
@@ -12,6 +15,13 @@ public class BuilderState : PlayerInterface
 
     public void UpdateState(PlayerController player)
     {
+
+        //if (player.characterController.isGrounded && verticalVelocity < 1)
+        //{
+        //    verticalVelocity = 0f;
+        //    player.StateTransition(new IdleState());
+        //}
+
         if (player.maxObjects < 1)
         {
             player.isCreating = false;

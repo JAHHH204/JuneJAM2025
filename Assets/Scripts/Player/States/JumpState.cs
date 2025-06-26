@@ -31,6 +31,12 @@ public class JumpState : PlayerInterface
             player.StateTransition(new IdleState());
         }
 
+        if (player.isCreating)
+        {
+            player.StateTransition(new BuilderState());
+
+        }
+
     }
 
     public void ExitState(PlayerController player)
