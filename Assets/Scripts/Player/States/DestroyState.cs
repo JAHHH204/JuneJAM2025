@@ -11,11 +11,13 @@ public class DestroyState : PlayerInterface
     {
         player.SetAnims("Destroy");
         TriggerExplosion(player.transform.position, player.DestroyLayer);
+        
     }
 
     public void UpdateState(PlayerController player)
     {
         player.StateTransition(new IdleState());
+        player.PlayParticles("Destroy");
         player.SetAnims("Idle");
     }
 
@@ -37,6 +39,7 @@ public class DestroyState : PlayerInterface
                 Debug.DrawLine(position, hit.transform.position, Color.red, 1f);
                 rb.AddExplosionForce(explosionForce, position, explosionRadius);
                 Object.Destroy(hit.gameObject, destroyDelay);
+                
             }
         }
 

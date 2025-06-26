@@ -29,11 +29,16 @@ public class PlayerController : MonoBehaviour
 
      public bool isDestroying { get; set; }
 
+    public bool isFallingDown { get; set; }
+
 
     [Header("Extra")]
     private Vector3 gravity = Vector3.zero;
      public int maxObjects;
     public GameObject lastSpawnedPlatform;
+    public ParticleSystem destroyParticles;
+    public ParticleSystem grabParticles;
+    public ParticleSystem dustParticles;
 
     [Header("Jumping")]
     [SerializeField] private float jumpForce = 12f;
@@ -42,7 +47,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isFalling => verticalVelocity < 0f;
 
     [Header("Grabbing")]
-    public Transform grabPoint; // Point in front of the player where the object will hover
+    public Transform grabPoint; 
     public float grabDistance = 3f;
     public float grabLerpSpeed = 10f;
     public LayerMask grabbableLayer;
@@ -101,6 +106,11 @@ public class PlayerController : MonoBehaviour
         {
             verticalVelocity = jumpForce;
             SetAnims("Jump");
+
+            if (grabbedObject != null)
+            {
+                grabbedObject.transform.position += Vector3.up * 0.2f;
+            }
         }
 
         ApplyGravity();
@@ -111,18 +121,9 @@ public class PlayerController : MonoBehaviour
 
         isCreating = false;
         isDestroying = false;
+        isFallingDown = false;
 
-        if (isJumping && characterController.isGrounded)
-        {
-            verticalVelocity = jumpForce;
-            SetAnims("Jump");
 
-            // Optional: Slightly lift held object to follow player
-            if (grabbedObject != null)
-            {
-                grabbedObject.transform.position += Vector3.up * 0.2f;
-            }
-        }
 
 
     }
@@ -151,7 +152,6 @@ public class PlayerController : MonoBehaviour
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y).normalized;
         RotateCharacter(move);
 
-        // Air control vs grounded control
         float moveSpeed = characterController.isGrounded ? 10f : 10f * airControlMult;
 
         Vector3 velocity = move * moveSpeed;
@@ -159,20 +159,17 @@ public class PlayerController : MonoBehaviour
 
         MoveCharacter(velocity);
 
-        // Idle transition if not moving
         if (moveInput == Vector2.zero && characterController.isGrounded && verticalVelocity <= 0f)
         {
             StateTransition(new IdleState());
         }
 
-        // Build while grounded
         if (isCreating && characterController.isGrounded)
         {
             TryBuild();
             StateTransition(new IdleState());
         }
 
-        // Handle other states
         if (isDestroying)
         {
             StateTransition(new DestroyState());
@@ -224,7 +221,6 @@ public class PlayerController : MonoBehaviour
     {
         if (maxObjects < 1)
         {
-            // Destroy old and build new
             if (lastSpawnedPlatform != null)
                 GameObject.Destroy(lastSpawnedPlatform);
 
@@ -249,6 +245,16 @@ public class PlayerController : MonoBehaviour
             grabbedObject = null;
             isGrabbing = false;
         }
+    }
+
+    public void PlayParticles(string particleName)
+    {
+        if (particleName == "Destroy")
+            destroyParticles.Play();
+        else if (particleName == "Grab")
+            grabParticles.Play();
+        else if (particleName == "Land")
+            dustParticles.Play();
     }
 
 }

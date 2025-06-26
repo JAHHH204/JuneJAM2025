@@ -27,6 +27,7 @@ public class JumpState : PlayerInterface
 
         if (player.characterController.isGrounded && verticalVelocity < 1)
         {
+            player.SetAnims("Land");
             verticalVelocity = 0f;
             player.StateTransition(new IdleState());
         }
