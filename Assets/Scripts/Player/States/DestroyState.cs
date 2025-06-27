@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DestroyState : PlayerInterface
 {
-     private float explosionRadius = 10f;
+     private float explosionRadius = 2f;
      private float explosionForce = 700f;
      private float destroyDelay = 2f;
      public LayerMask destroyLayer;
