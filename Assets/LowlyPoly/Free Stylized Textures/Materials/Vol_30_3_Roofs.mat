@@ -9,13 +9,12 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Vol_30_3_Roofs
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: ebabfdf81fc72414f9921cfe2ed4b652, type: 2}
+  m_Parent: {fileID: 2100000, guid: 7ea77b3e49c1d61409582be7e98d0d61, type: 2}
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords:
   - _NORMALMAP
   - _OCCLUSIONMAP
   - _PARALLAXMAP
-  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_InvalidKeywords: []
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
