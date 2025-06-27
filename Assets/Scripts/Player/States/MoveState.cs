@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class MoveState : PlayerInterface
 {
-   
+    public Material deadMaterial;
     public void EnterState(PlayerController player)
     {
+        deadMaterial=player.deadMaterial;
+
         player.SetAnims("Move");
+
+        player.ChangeMaterial(deadMaterial);
         
     }
 

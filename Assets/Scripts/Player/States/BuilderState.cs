@@ -8,9 +8,17 @@ public class BuilderState : PlayerInterface
     private float gravity = -9.81f;
     private float verticalVelocity = 0f;
     float airControlMult = 0.4f;
+    private Material createMaterial;
+    private SpriteCanvas spriteCanvas;
     public void EnterState(PlayerController player)
     {
         player.SetAnims("Create");
+        player.PlaySoundOnce(player.audioManager.createSFX);
+        spriteCanvas = player.GetComponentInChildren<SpriteCanvas>();
+        spriteCanvas.SetGreenSprite();
+        createMaterial = player.createMaterial;
+       
+        player.ChangeMaterial(createMaterial);  
     }
 
     public void UpdateState(PlayerController player)
@@ -33,7 +41,7 @@ public class BuilderState : PlayerInterface
             }
 
             // Spawn a new platform
-            Vector3 spawnPos = player.transform.position + player.transform.forward * 2f+player.transform.right+ player.grabPoint.transform.up;
+            Vector3 spawnPos = player.transform.position - player.grabPoint.transform.forward +player.transform.right;
             GameObject spawnedPlatform = GameObject.Instantiate(player.buildingObject, spawnPos, player.grabPoint.transform.rotation);
             Debug.Log("Building at " + spawnPos);
 
@@ -49,7 +57,7 @@ public class BuilderState : PlayerInterface
 
             // player.maxObjects++;  // You can use this logic if you limit to 1 at a time
 
-            player.StateTransition(new IdleState());
+           // player.StateTransition(new IdleState());
         }
 
         else
@@ -63,7 +71,7 @@ public class BuilderState : PlayerInterface
 
     public void ExitState(PlayerController player)
     {
-        player.SetAnims("Idle");
+
     
     }
 }

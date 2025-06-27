@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,6 +40,9 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem destroyParticles;
     public ParticleSystem grabParticles;
     public ParticleSystem dustParticles;
+    [SerializeField] private SkinnedMeshRenderer playerMesh;
+
+
 
     [Header("Jumping")]
     [SerializeField] private float jumpForce = 12f;
@@ -52,6 +56,16 @@ public class PlayerController : MonoBehaviour
     public float grabLerpSpeed = 10f;
     public LayerMask grabbableLayer;
     public GameObject grabbedObject;
+
+    [Header("SFX")]
+    public AudioManager audioManager;
+
+    [Header("Materials")]
+    public Material destroyMaterial;
+    public Material grabMaterial;
+    public Material createMaterial;
+    public Material deadMaterial;
+
     private void Awake()
     {
         maxObjects = 0;
@@ -82,6 +96,8 @@ public class PlayerController : MonoBehaviour
             }
         };
 
+
+
     }
 
     private void OnEnable() => playerInput.Enable();
@@ -107,6 +123,7 @@ public class PlayerController : MonoBehaviour
             verticalVelocity = jumpForce;
             SetAnims("Jump");
 
+
             if (grabbedObject != null)
             {
                 grabbedObject.transform.position += Vector3.up * 0.2f;
@@ -122,7 +139,6 @@ public class PlayerController : MonoBehaviour
         isCreating = false;
         isDestroying = false;
         isFallingDown = false;
-
 
 
 
@@ -219,12 +235,13 @@ public class PlayerController : MonoBehaviour
 
     public void TryBuild()
     {
+        SetAnims("Create");
         if (maxObjects < 1)
         {
             if (lastSpawnedPlatform != null)
                 GameObject.Destroy(lastSpawnedPlatform);
 
-            Vector3 spawnPos = transform.position + transform.forward * 2f+transform.right+ grabPoint.transform.up;
+            Vector3 spawnPos = grabPoint.transform.position -grabPoint.transform.forward +transform.right;
             GameObject spawnedPlatform = GameObject.Instantiate(buildingObject, spawnPos, grabPoint.transform.rotation);
             lastSpawnedPlatform = spawnedPlatform;
             isCreating = false;
@@ -257,4 +274,13 @@ public class PlayerController : MonoBehaviour
             dustParticles.Play();
     }
 
+    public void PlaySoundOnce(AudioClip clipName)
+    {
+        audioManager.PlayClip(clipName);
+    }
+
+    public void ChangeMaterial(Material playerMaterial)
+    {
+        playerMesh.material = playerMaterial;
+    }
 }

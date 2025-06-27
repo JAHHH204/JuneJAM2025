@@ -2,28 +2,31 @@ using UnityEngine;
 
 public class DestroyState : PlayerInterface
 {
-    [SerializeField] private float explosionRadius = 10f;
-    [SerializeField] private float explosionForce = 700f;
-    [SerializeField] private float destroyDelay = 2f;
-    [SerializeField] public LayerMask destroyLayer;
+     private float explosionRadius = 10f;
+     private float explosionForce = 700f;
+     private float destroyDelay = 2f;
+     public LayerMask destroyLayer;
+    private Material destroyMaterial;
+    private SpriteCanvas spriteCanvas;
 
     public void EnterState(PlayerController player)
     {
         player.SetAnims("Destroy");
+        player.ChangeMaterial(player.destroyMaterial);
+        player.PlaySoundOnce(player.audioManager.destroySFX); 
         TriggerExplosion(player.transform.position, player.DestroyLayer);
-        
+
     }
 
     public void UpdateState(PlayerController player)
     {
         player.StateTransition(new IdleState());
-        player.PlayParticles("Destroy");
-        player.SetAnims("Idle");
+
+
     }
 
     public void ExitState(PlayerController player)
     {
-        
 
     }
 
