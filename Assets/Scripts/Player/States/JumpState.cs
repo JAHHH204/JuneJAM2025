@@ -9,6 +9,7 @@ public class JumpState : PlayerInterface
 
     public void EnterState(PlayerController player)
     {
+        player.PlaySoundOnce(player.audioManager.jumpSFX);
         verticalVelocity = jumpForce;
         player.SetAnims("Jump");
     }
@@ -42,7 +43,7 @@ public class JumpState : PlayerInterface
 
     public void ExitState(PlayerController player)
     {
-        player.SetAnims("Idle");
+
     }
 
 

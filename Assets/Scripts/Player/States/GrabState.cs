@@ -2,14 +2,23 @@ using UnityEngine;
 
 public class GrabState : PlayerInterface
 {
+    public Material grabMaterial;
+    private SpriteCanvas spriteCanvas;
     public void EnterState(PlayerController player)
     {
+        player.SetAnims("Grab");
+        player.PlaySoundOnce(player.audioManager.grabSFX);
+        spriteCanvas = player.GetComponentInChildren<SpriteCanvas>();
+        spriteCanvas.SetBlueSprite();
+        grabMaterial = player.grabMaterial;
+        
     if (player.grabbedObject == null)
     {
         TryGrab(player);
     }
 
     player.isGrabbing = false; 
+        player.ChangeMaterial(grabMaterial);
     }
     public void UpdateState(PlayerController player)
     {
@@ -32,7 +41,7 @@ public class GrabState : PlayerInterface
 
     public void ExitState(PlayerController player)
     {
-        player.SetAnims("Idle");
+        
     }
 
     private void TryGrab(PlayerController player)

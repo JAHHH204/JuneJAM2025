@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuCanvas.enabled = false;
         settingsCanvas.enabled = false;
-        settingsCanvas.GetComponentInChildren<UnityEngine.UI.Slider>().value = GameManager.instance.volume;
+       // settingsCanvas.GetComponentInChildren<UnityEngine.UI.Slider>().value = GameManager.instance.volume;
 
     }
 
@@ -68,6 +68,6 @@ public class PauseMenu : MonoBehaviour
     }
     public void AdjustVolume()
     {
-        GameManager.instance.volume = settingsCanvas.GetComponentInChildren<UnityEngine.UI.Slider>().value;
+       // GameManager.instance.volume = settingsCanvas.GetComponentInChildren<UnityEngine.UI.Slider>().value;
     }
 }
