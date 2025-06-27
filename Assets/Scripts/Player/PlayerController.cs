@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isFalling => verticalVelocity < 0f;
 
     [Header("Grabbing")]
-    public Transform grabPoint; 
+    public Transform grabPoint;
+    public Transform placePoint;
     public float grabDistance = 3f;
     public float grabLerpSpeed = 10f;
     public LayerMask grabbableLayer;
@@ -241,7 +242,7 @@ public class PlayerController : MonoBehaviour
             if (lastSpawnedPlatform != null)
                 GameObject.Destroy(lastSpawnedPlatform);
 
-            Vector3 spawnPos = grabPoint.transform.position -grabPoint.transform.forward +transform.right;
+            Vector3 spawnPos = placePoint.transform.position -placePoint.transform.forward +transform.right;
             GameObject spawnedPlatform = GameObject.Instantiate(buildingObject, spawnPos, grabPoint.transform.rotation);
             lastSpawnedPlatform = spawnedPlatform;
             isCreating = false;

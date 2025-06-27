@@ -39,6 +39,7 @@ public class DestroyState : PlayerInterface
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                rb.isKinematic = false; // Ensure the rigidbody is not kinematic
                 Debug.DrawLine(position, hit.transform.position, Color.red, 1f);
                 rb.AddExplosionForce(explosionForce, position, explosionRadius);
                 Object.Destroy(hit.gameObject, destroyDelay);

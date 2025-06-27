@@ -4,6 +4,7 @@ public class FinalPuzzleScript : MonoBehaviour
 {
     public GameObject targetToWatchDie;
     public Vector3 targetPosition;
+    public Quaternion targetRotation;
     public float moveSpeed = 1f;
 
     void Start()
@@ -33,6 +34,7 @@ public class FinalPuzzleScript : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, moveSpeed * Time.deltaTime);
             yield return null; // Wait for the next frame
         }
         // Optionally, you can stop the movement when the target position is reached
