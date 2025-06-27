@@ -10,9 +10,9 @@ public class SpriteCanvas : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spriteGreen.SetActive(false);
-        spriteBlue.SetActive(false);
-        spriteRed.SetActive(false);
+        spriteGreen.SetActive(true);
+        spriteBlue.SetActive(true);
+        spriteRed.SetActive(true);
     }
 
     // Update is called once per frame
@@ -23,29 +23,29 @@ public class SpriteCanvas : MonoBehaviour
 
     public void SetRedSprite()
     {
-        spriteRed.SetActive(true);
-        spriteGreen.SetActive(false);
-        spriteBlue.SetActive(false);
+        spriteRed.SetActive(false);
+        spriteGreen.SetActive(true);
+        spriteBlue.SetActive(true);
     }
 
     public void SetGreenSprite()
     {
-        spriteGreen.SetActive(true);
-        spriteBlue.SetActive(false);
-        spriteRed.SetActive(false);
+        spriteGreen.SetActive(false);
+        spriteBlue.SetActive(true);
+        spriteRed.SetActive(true);
     }
 
     public void SetBlueSprite()
     {
-        spriteGreen.SetActive(false);
-        spriteBlue.SetActive(true);
-        spriteRed.SetActive(false);
+        spriteGreen.SetActive(true);
+        spriteBlue.SetActive(false);
+        spriteRed.SetActive(true);
     }
 
     public void SetNoSprite()
     {
-        spriteGreen.SetActive(false);
-        spriteBlue.SetActive(false);
-        spriteRed.SetActive(false);
+        spriteGreen.SetActive(true);
+        spriteBlue.SetActive(true);
+        spriteRed.SetActive(true);
     }
 }
