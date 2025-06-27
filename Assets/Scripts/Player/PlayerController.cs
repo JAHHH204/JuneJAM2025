@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
             if (lastSpawnedPlatform != null)
                 GameObject.Destroy(lastSpawnedPlatform);
 
-            Vector3 spawnPos = transform.position + transform.forward * 2f+transform.right;
+            Vector3 spawnPos = transform.position + transform.forward * 2f+transform.right+ grabPoint.transform.up;
             GameObject spawnedPlatform = GameObject.Instantiate(buildingObject, spawnPos, grabPoint.transform.rotation);
             lastSpawnedPlatform = spawnedPlatform;
             isCreating = false;
