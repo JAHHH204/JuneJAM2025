@@ -613,7 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 936676247}
   characterController: {fileID: 936676246}
-  buildingObject: {fileID: 8400004791111746692, guid: 689381a396a7fe943b1b4c163b362b93, type: 3}
+  buildingObject: {fileID: 2645692553895366435, guid: 05bac6431120561499f593bcc7ff1b12, type: 3}
   destroyLayer:
     serializedVersion: 2
     m_Bits: 128
