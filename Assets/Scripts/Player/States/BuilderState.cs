@@ -33,8 +33,8 @@ public class BuilderState : PlayerInterface
             }
 
             // Spawn a new platform
-            Vector3 spawnPos = player.transform.position + player.transform.forward * 2f;
-            GameObject spawnedPlatform = GameObject.Instantiate(player.buildingObject, spawnPos, player.transform.rotation);
+            Vector3 spawnPos = player.transform.position + player.transform.forward * 2f+player.transform.right;
+            GameObject spawnedPlatform = GameObject.Instantiate(player.buildingObject, spawnPos, player.grabPoint.transform.rotation);
             Debug.Log("Building at " + spawnPos);
 
             // Store reference to the new platform
