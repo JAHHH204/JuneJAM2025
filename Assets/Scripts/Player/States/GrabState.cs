@@ -54,7 +54,7 @@ public class GrabState : PlayerInterface
             if (rb != null)
             {
                 rb.isKinematic = true;
-                rb.useGravity = false;
+                rb.useGravity = true;
 
                 player.grabbedObject = target;
                 target.transform.position = player.grabPoint.position;
